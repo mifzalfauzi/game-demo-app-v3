@@ -6,7 +6,7 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>try</h1>
+    <h1>Main</h1>
 
     <?php
     echo "Hello, World!";
