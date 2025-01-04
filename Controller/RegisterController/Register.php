@@ -26,7 +26,7 @@ class Register
             //called the process register here, no need to invoke again
             $result = ProcessRegister::ProcessUserRegister($registerViewModel);
 
-          
+            echo "This is the result:" . $result;
             
         }
     }

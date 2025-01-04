@@ -1,35 +1,40 @@
 <?php
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Main/Common/Models/RegisterUserViewModel.php';
 
-// Ensure UserViewModel is included at the top if not already
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/Main/Common/Models/UserViewModel.php';
-// echo $_SERVER['DOCUMENT_ROOT'] . '/Main/Common/Models/UserViewModel.php';
+class RegisterServices
+{
+    public static function RegisterServices($jsonPayload)
+    {
+        // Decode the JSON payload
+        $registerViewModelData = json_decode($jsonPayload);
 
-// class RegisterServices
-// {
-//     public static function RegisterServices($registermodel)
-//     {
-//         echo 'UserViewModel class exists: ' . (class_exists('UserViewModel') ? 'Yes' : 'No') . '<br>';
+        // Debugging: print the structure of the decoded object
+        echo "decoded obj";
+        echo '<pre>';
+        print_r($registerViewModelData);
+        echo '</pre>';
 
-//         echo 'Class of object passed: ' . get_class($registermodel) . '<br>';
-            
-        
+        if (json_last_error() === JSON_ERROR_NONE) 
+        {
+            // Ensure the properties exist before trying to access them
+            if (isset($registerViewModelData->username) && isset($registerViewModelData->email) && isset($registerViewModelData->password)) {
+                echo "registerViewModel: " . $registerViewModelData->username . "<br>";
+                echo "<h1>Processing Registration in RegisterServices</h1>";
+                echo "Username: " . $registerViewModelData->username . "<br>";
+                echo "Email: " . $registerViewModelData->email . "<br>";
+                echo "Password: " . $registerViewModelData->password . "<br>";
 
-//         if ($registermodel) {
-//                 echo "User Registration Details:<br>";
-//                 echo "Username: " . $registermodel->getUsername() . "<br>";
-//                 echo "Email: " . $registermodel->getEmail() . "<br>";
-//                 echo "Role: " . $registermodel->getRole() . "<br>";
-//             } else {
-//                 echo "Error: The object passed is not an instance of UserViewModel.<br>";
-//         }
-
-//         echo '<pre>';
-//         print_r($registermodel); 
-//         echo '</pre>';
-
-//         return $registermodel;
-//     }
-// }
+                return "Registration successful!";
+            } else {
+                echo "Missing properties in the input data. <br>";
+                return "Error in registration.";
+            }
+        } 
+        else 
+        {
+            echo "Error decoding JSON: " . json_last_error_msg();
+            return "Error in registration.";
+        }
+    }
+}
 ?>
